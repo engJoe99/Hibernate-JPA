@@ -1,6 +1,7 @@
 package com.luv2code.cruddemo;
 
-import org.springframework.boot.ApplicationArguments;
+import com.luv2code.cruddemo.dao.StudentDAO;
+import com.luv2code.cruddemo.entity.Student;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,10 +15,44 @@ public class CruddemoApplication {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(ApplicationArguments args) {
+    public CommandLineRunner commandLineRunner(StudentDAO  studentDAO) {
         return runner -> {
-            System.out.println("Command line runner");
+//           createStudent(studentDAO);
+             createMultipleStudents(studentDAO);
         };
+    }
+
+    private void createMultipleStudents(StudentDAO studentDAO) {
+//       create the student objects
+        System.out.println("Creating 3 student objects:.....");
+        Student tempStudent1 = new Student("OMAR", "MOHAMED", "omar@mohamed.com");
+        Student tempStudent2 = new Student("YOUSSEF", "MOHAMED", "youssef@mohamed.com");
+        Student tempStudent3 = new Student("HANA", "AHMED", "hana@ahmed.com");
+
+//        save the student objects to the DB
+        System.out.println("Saving the student objects...");
+        studentDAO.save(tempStudent1);
+        studentDAO.save(tempStudent2);
+        studentDAO.save(tempStudent3);
+
+//        Display the IDs of the saved student objects
+        System.out.println("Saved students. Generated IDs: " +
+                tempStudent1.getId() + " , " +
+                tempStudent2.getId() + " , " +
+                tempStudent3.getId());
+    }
+
+    private void createStudent(StudentDAO studentDAO) {
+//        create the student object
+        System.out.println("Creating a new student object");
+        Student tempStudent = new Student("KOKO", "YOUSSEF", "koko@youssef.com");
+
+//        save the student object
+        System.out.println("Saving the student...");
+        studentDAO.save(tempStudent);
+
+//        Display id of the saved student
+        System.out.println("Saved student. Generated id: " + tempStudent.getId());
     }
 
 
