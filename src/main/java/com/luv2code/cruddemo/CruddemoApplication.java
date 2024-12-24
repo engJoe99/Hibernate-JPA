@@ -20,15 +20,55 @@ public class CruddemoApplication {
     public CommandLineRunner commandLineRunner(StudentDAO  studentDAO) {
         return runner -> {
 //            createStudent(studentDAO);
-//            createMultipleStudents(studentDAO);
+
+            createMultipleStudents(studentDAO);
+
 //            readStudent(studentDAO);
+
 //            queryForStudents(studentDAO);
 
-            queryForStudentsByLastName(studentDAO);
-            
+//            queryForStudentsByLastName(studentDAO);
 
+//            updateStudent(studentDAO);
+
+//           deleteStudent(studentDAO);
+
+
+//            deleteAllStudents(studentDAO);
             
         };
+    }
+
+    private void deleteAllStudents(StudentDAO studentDAO) {
+
+        System.out.println("Deleting all students");
+        int numRowsDeleted = studentDAO.deleteAllStudents();
+        System.out.println("Deleted " + numRowsDeleted + " rows");
+    }
+
+    private void deleteStudent(StudentDAO studentDAO) {
+        int studenId = 3000;
+        System.out.println("Deleting student with id: " + studenId);
+        studentDAO.delete(studenId);
+    }
+
+    private void updateStudent(StudentDAO studentDAO) {
+//        retrieve the student based on the id: PK
+        int studentId = 3;
+        System.out.println("Getting student with id: " + studentId);
+        Student myStudent = studentDAO.findById(studentId);
+
+//        change the first name to "MENA"
+        System.out.println("Updating the student...");
+        myStudent.setFirstName("MENA");
+        myStudent.setLastName("HASSAN");
+        myStudent.setEmail("mena@hassan.com");
+
+//        update the student
+        studentDAO.update(myStudent);
+
+//        display the updated student
+        System.out.println("Updated Student: " + myStudent);
     }
 
     private void queryForStudentsByLastName(StudentDAO studentDAO) {
